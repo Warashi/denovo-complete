@@ -38,7 +38,7 @@ async function complete(
     ...new Set(items),
   ]);
   assertString(selection);
-  if (selection === "") {
+  if (selection.trim() === "") {
     return;
   }
 
