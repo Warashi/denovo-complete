@@ -10,14 +10,14 @@ local line
 
 setopt rcquotes
 () {
-    zpty -w z source $1
-    repeat 4; do
-        zpty -r z line
-        [[ $line == ok* ]] && return
-    done
-    echo 'error initializing.' >&2
-    exit 2
-} =( <<< '
+	zpty -w z source $1
+	repeat 4; do
+		zpty -r z line
+		[[ $line == ok* ]] && return
+	done
+	echo 'error initializing.' >&2
+	exit 2
+	} =( <<< '
 typeset -gx DENOVO_COMPLETE_ZSH_CACHE_DIR=${DENOVO_COMPLETE_ZSH_CACHE_DIR:-"${XDG_CACHE_HOME:-"$HOME/.cache"}/deoplete/zsh"}
 
 mkdir -p "$DENOVO_COMPLETE_ZSH_CACHE_DIR"
@@ -136,11 +136,11 @@ zpty -w z "$*"$'\t'
 integer tog=0
 # read from the pty, and parse linewise
 while zpty -r z; do :; done | while IFS= read -r line; do
-    if [[ $line == *$'\0\r' ]]; then
-        (( tog++ )) && return 0 || continue
-    fi
-    # display between toggles
-    (( tog )) && echo -E - $line
+	if [[ $line == *$'\0\r' ]]; then
+		(( tog++ )) && return 0 || continue
+	fi
+	# display between toggles
+	(( tog )) && echo -E - $line
 done
 
 return 2
