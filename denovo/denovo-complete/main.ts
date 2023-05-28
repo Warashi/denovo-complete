@@ -45,10 +45,10 @@ async function complete(
   const words = lbuffer.split(/\s/);
   words.pop();
 
-  const newLBuffer = JSON.stringify(
-    `${words.join(" ")} ${selection.trim()}`.trim(),
-  );
-  console.log(newLBuffer);
+  const newLBuffer = `${words.join(" ")} ${selection.trim()}`
+    .trim()
+    .replaceAll(`'`, `\\'`);
 
-  await denovo.eval(`LBUFFER=${newLBuffer}`);
+  console.log(newLBuffer);
+  await denovo.eval(`LBUFFER='${newLBuffer}'`);
 }
