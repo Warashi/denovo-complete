@@ -49,6 +49,5 @@ async function complete(
     .trim()
     .replaceAll(`'`, `\\'`);
 
-  console.log(newLBuffer);
   await denovo.eval(`LBUFFER='${newLBuffer}'`);
 }
