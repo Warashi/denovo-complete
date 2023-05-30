@@ -28,24 +28,26 @@ async function complete(
   const { stdout } = await command.output();
 
   const items = new TextDecoder().decode(stdout).trim().split(/\r?\n/)
-    .filter((line) => line.length !== 0)
-    .map((line) => {
-      const pieces = line.split(" -- ");
-      return pieces.length <= 1 ? line : pieces[0];
-    });
+    .filter((line) => line.length !== 0);
 
-  const selection = await denovo.dispatch("denovo-fzf", "fzf", ...[
-    ...new Set(items),
-  ]);
+  const selection = await denovo.dispatch(
+    "denovo-fzf",
+    "fzf",
+    ...[
+      ...new Set(items),
+    ],
+  );
   assertString(selection);
   if (selection.trim() === "") {
     return;
   }
+  const pieces = selection.trim().split(" -- ");
+  const newWord = pieces.length < 1 ? selection.trim() : pieces[0].trim();
 
   const words = lbuffer.split(/\s/);
   words.pop();
 
-  const newLBuffer = `${words.join(" ")} ${selection.trim()}`
+  const newLBuffer = `${words.join(" ")} ${newWord}`
     .trim()
     .replaceAll(`'`, `\\'`);
 
