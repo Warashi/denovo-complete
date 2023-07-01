@@ -31,7 +31,7 @@ async function complete(
     .filter((line) => line.length !== 0);
 
   const selection = await denovo.dispatch(
-    "denovo-fzf",
+    "fzf",
     "fzf",
     ...[
       ...new Set(items),
