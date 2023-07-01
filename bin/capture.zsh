@@ -18,7 +18,7 @@ setopt rcquotes
 	echo 'error initializing.' >&2
 	exit 2
 	} =( <<< '
-typeset -gx DENOVO_COMPLETE_ZSH_CACHE_DIR=${DENOVO_COMPLETE_ZSH_CACHE_DIR:-"${XDG_CACHE_HOME:-"$HOME/.cache"}/deoplete/zsh"}
+typeset -gx DENOVO_COMPLETE_ZSH_CACHE_DIR=${DENOVO_COMPLETE_ZSH_CACHE_DIR:-"${XDG_CACHE_HOME:-"$HOME/.cache"}/denovo-complete/zsh"}
 
 mkdir -p "$DENOVO_COMPLETE_ZSH_CACHE_DIR"
 
