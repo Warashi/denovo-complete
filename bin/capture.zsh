@@ -26,8 +26,18 @@ mkdir -p "$DENOVO_COMPLETE_ZSH_CACHE_DIR"
 PROMPT=
 
 # load completion system
-autoload -U compinit; compinit -C
-compinit -d "$DENOVO_COMPLETE_ZSH_CACHE_DIR/compdump"
+_compinit() {
+  autoload -Uz compinit
+  setopt extended_glob
+  local zcompdumpfile="$DENOVO_COMPLETE_ZSH_CACHE_DIR/compdump"
+  if [[ ! -e $zcompdumpfile.zwc(#qN.mh-24) ]]; then
+    compinit -d $zcompdumpfile
+    zcompile $zcompdumpfile
+  else
+    compinit -C -d $zcompdumpfile
+  fi
+}
+_compinit
 
 # never run a command
 bindkey ''^M'' undefined

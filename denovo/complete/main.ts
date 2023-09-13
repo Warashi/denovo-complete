@@ -16,12 +16,14 @@ async function complete(
   cwd: string,
   lbuffer: string,
 ): Promise<void> {
+  const fpath = await denovo.eval(`print -rNC1 -- "$fpath[@]"`);
   const capture = join(denovo.directory, "bin", "capture.zsh");
   const command = new Deno.Command(
     "zsh",
     {
       args: [capture, lbuffer],
       cwd: cwd,
+      env: { fpath: fpath.replaceAll("\0", ":") },
     },
   );
 
