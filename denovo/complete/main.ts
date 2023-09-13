@@ -1,6 +1,6 @@
 import { type Denovo } from "https://deno.land/x/denovo_core@v0.0.6/mod.ts";
-import { join } from "https://deno.land/std@0.171.0/path/mod.ts";
-import { assertString } from "https://deno.land/x/unknownutil@v2.1.0/assert.ts";
+import { join } from "https://deno.land/std@0.201.0/path/mod.ts";
+import { assert, is } from "https://deno.land/x/unknownutil@v3.6.0/mod.ts";
 
 export function main(denovo: Denovo): Promise<void> {
   denovo.dispatcher = {
@@ -37,7 +37,7 @@ async function complete(
       ...new Set(items),
     ],
   );
-  assertString(selection);
+  assert(selection, is.String);
   if (selection.trim() === "") {
     return;
   }
