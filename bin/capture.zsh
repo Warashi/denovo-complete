@@ -128,7 +128,7 @@ compadd () {
     for i in {1..$#__hits}; do
 
         # add a dir suffix?
-        (( dirsuf )) && [[ -d $__hits[$i] ]] && dsuf=/ || dsuf=
+        (( dirsuf )) && [[ -d $IPREFIX$apre$hpre$__hits[$i] ]] && dsuf=/ || dsuf=
         # description to be displayed afterwards
         (( $#__dscr >= $i )) && dscr=" -- ${${__dscr[$i]}##$__hits[$i] #}" || dscr=
 
