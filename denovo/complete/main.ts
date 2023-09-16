@@ -23,7 +23,7 @@ async function complete(
     {
       args: [capture, lbuffer],
       cwd: cwd,
-      env: { fpath: fpath.replaceAll("\0", ":") },
+      env: { FPATH: fpath.replaceAll("\0", ":") },
     },
   );
 
