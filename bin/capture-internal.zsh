@@ -110,7 +110,9 @@ compadd () {
     for i in {1..$#__hits}; do
 
         # add a dir suffix?
-        (( dirsuf )) && [[ -d $IPREFIX$apre$hpre$__hits[$i] ]] && dsuf=/ || dsuf=
+        # use GLOB_SUBST to expand `~/`
+        local prefix="$IPREFIX$apre$hpre"
+        (( dirsuf )) && [[ -d ${~prefix}$__hits[$i] ]] && dsuf=/ || dsuf=
         # description to be displayed afterwards
         (( $#__dscr >= $i )) && dscr=$'\0'"${${__dscr[$i]}##$__hits[$i] #}" || dscr=
 
