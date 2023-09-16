@@ -34,8 +34,13 @@ async function complete(
 
   const selection = await denovo.dispatch(
     "fzf",
-    "fzf",
+    "fzf-with-options",
     ...[
+      [
+        `--delimiter='\\0'`,
+        `--with-nth=1`,
+        `--preview='echo {2}'`,
+      ].join(" "),
       ...new Set(items),
     ],
   );
@@ -43,7 +48,7 @@ async function complete(
   if (selection.trim() === "") {
     return;
   }
-  const pieces = selection.trim().split(" -- ");
+  const pieces = selection.trim().split("\0");
   const newWord = pieces.length < 1 ? selection.trim() : pieces[0].trim();
 
   const words = lbuffer.split(/\s/);

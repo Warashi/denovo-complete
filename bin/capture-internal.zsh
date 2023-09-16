@@ -112,7 +112,7 @@ compadd () {
         # add a dir suffix?
         (( dirsuf )) && [[ -d $IPREFIX$apre$hpre$__hits[$i] ]] && dsuf=/ || dsuf=
         # description to be displayed afterwards
-        (( $#__dscr >= $i )) && dscr=" -- ${${__dscr[$i]}##$__hits[$i] #}" || dscr=
+        (( $#__dscr >= $i )) && dscr=$'\0'"${${__dscr[$i]}##$__hits[$i] #}" || dscr=
 
         echo -E - $IPREFIX$apre$hpre$__hits[$i]$dsuf$hsuf$asuf$dscr
 
