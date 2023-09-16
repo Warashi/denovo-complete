@@ -28,7 +28,7 @@ PROMPT=
 # load completion system
 _compinit() {
   autoload -Uz compinit
-  setopt extended_glob
+  setopt local_options extended_glob
   local zcompdumpfile="$DENOVO_COMPLETE_ZSH_CACHE_DIR/compdump"
   if [[ ! -e $zcompdumpfile.zwc(#qN.mh-24) ]]; then
     compinit -d $zcompdumpfile
