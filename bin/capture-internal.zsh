@@ -18,6 +18,7 @@ _compinit() {
     else
         compinit -C -d $zcompdumpfile
     fi
+    which carapace &>/dev/null && eval "$(carapace _carapace zsh)"
 }
 _compinit
 
