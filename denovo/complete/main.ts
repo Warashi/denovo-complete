@@ -1,29 +1,26 @@
-import { type Denovo } from "https://deno.land/x/denovo_core@v0.0.6/mod.ts";
-import { join } from "https://deno.land/std@0.201.0/path/mod.ts";
-import { assert, is } from "https://deno.land/x/unknownutil@v3.6.0/mod.ts";
+import { type Denovo } from "https://deno.land/x/denovo_core@v0.0.7/mod.ts";
+import { join } from "https://deno.land/std@0.216.0/path/mod.ts";
+import { assert, is } from "https://deno.land/x/unknownutil@v3.16.3/mod.ts";
 
-export function main(denovo: Denovo): Promise<void> {
+export function main(denovo: Denovo): void {
   denovo.dispatcher = {
-    complete(cwd: string, lbuffer: string) {
-      return complete(denovo, cwd, lbuffer);
+    complete() {
+      return complete(denovo);
     },
   };
-  return Promise.resolve();
 }
 
 async function complete(
   denovo: Denovo,
-  cwd: string,
-  lbuffer: string,
 ): Promise<void> {
-  const fpath = await denovo.eval(`print -rNC1 -- "$fpath[@]"`);
+  const [cwd, lbuffer, ...fpath] = (await denovo.eval(`_v=("$PWD" "$LBUFFER" $fpath[@]); print -rNC1 -- "$_v[@]"; unset _v;`)).split("\0");
   const capture = join(denovo.directory, "bin", "capture.zsh");
   const command = new Deno.Command(
     "zsh",
     {
       args: [capture, lbuffer],
       cwd: cwd,
-      env: { FPATH: fpath.replaceAll("\0", ":") },
+      env: { FPATH: fpath.join(':') },
     },
   );
 
