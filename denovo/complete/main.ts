@@ -53,7 +53,8 @@ async function complete(
 
   const newLBuffer = `${words.join(" ")} ${newWord}`
     .trim()
-    .replaceAll(`'`, `\\'`);
+    .replaceAll(`"`, `\\"`)
+    .replaceAll("$", "\\$");
 
-  await denovo.eval(`LBUFFER='${newLBuffer}'`);
+  await denovo.eval(`LBUFFER="${newLBuffer}"`);
 }
