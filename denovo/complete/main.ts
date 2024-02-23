@@ -13,14 +13,20 @@ export function main(denovo: Denovo): void {
 async function complete(
   denovo: Denovo,
 ): Promise<void> {
-  const [cwd, lbuffer, ...fpath] = (await denovo.eval(`_v=("$PWD" "$LBUFFER" $fpath[@]); print -rNC1 -- "$_v[@]"; unset _v;`)).split("\0");
+  const [cwd, lbuffer, ...fpath] = (await denovo.eval(
+    `_v=("$PWD" "$LBUFFER" $fpath[@]); print -rNC1 -- "$_v[@]"; unset _v;`,
+  )).split("\0");
   const capture = join(denovo.directory, "bin", "capture.zsh");
   const command = new Deno.Command(
     "zsh",
     {
       args: [capture, lbuffer],
       cwd: cwd,
-      env: { FPATH: fpath.join(':') },
+      env: {
+        FPATH: fpath
+          .filter((s) => s.length > 0)
+          .join(":"),
+      },
     },
   );
 
